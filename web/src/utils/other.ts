@@ -40,7 +40,8 @@ export function useTitle() {
 		if (path === '/login') {
 			webTitle = <string>meta.title;
 		} else {
-			webTitle = setTagsViewNameI18n(router.currentRoute.value);
+			webTitle = 'hello';
+			// webTitle = setTagsViewNameI18n(router.currentRoute.value);
 		}
 		// document.title = `${webTitle} - ${globalTitle}` || "DVAdmin";
 		document.title = `${webTitle}`;

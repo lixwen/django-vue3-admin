@@ -1,5 +1,6 @@
 <template>
-	<el-form ref="formRef" size="large" class="login-content-form" :model="state.ruleForm" :rules="rules" @keyup.enter="loginClick">
+	<el-form ref="formRef" size="large" class="login-content-form" :model="state.ruleForm" :rules="rules"
+		@keyup.enter="loginClick">
 		<el-form-item class="login-animation1" prop="username">
 			<el-input type="text" :placeholder="$t('message.account.accountPlaceholder1')" v-model="ruleForm.username"
 				clearable autocomplete="off">
@@ -9,8 +10,8 @@
 			</el-input>
 		</el-form-item>
 		<el-form-item class="login-animation2" prop="password">
-			<el-input :type="isShowPassword ? 'text' : 'password'" :placeholder="$t('message.account.accountPlaceholder2')"
-				v-model="ruleForm.password">
+			<el-input :type="isShowPassword ? 'text' : 'password'"
+				:placeholder="$t('message.account.accountPlaceholder2')" v-model="ruleForm.password">
 				<template #prefix>
 					<el-icon class="el-input__icon"><ele-Unlock /></el-icon>
 				</template>
@@ -39,8 +40,7 @@
 			</el-col>
 		</el-form-item>
 		<el-form-item class="login-animation4">
-			<el-button type="primary" class="login-content-submit" round @click="loginClick"
-				:loading="loading.signIn">
+			<el-button type="primary" class="login-content-submit" round @click="loginClick" :loading="loading.signIn">
 				<span>{{ $t('message.account.accountBtnText') }}</span>
 			</el-button>
 		</el-form-item>
@@ -126,7 +126,7 @@ export default defineComponent({
 			});
 		};
 		const refreshCaptcha = async () => {
-			state.ruleForm.captcha=''
+			state.ruleForm.captcha = ''
 			loginApi.getCaptcha().then((ret: any) => {
 				state.ruleForm.captchaImgBase = ret.data.image_base;
 				state.ruleForm.captchaKey = ret.data.key;

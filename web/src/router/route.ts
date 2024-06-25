@@ -81,6 +81,14 @@ export const notFoundAndNoPower = [
  */
 export const staticRoutes: Array<RouteRecordRaw> = [
 	{
+		path: '/findex',
+		name: '/findex',
+		component: () => import('/@/views/home/index.vue'),
+		meta: {
+			isKeepAlive: true,
+		}
+	},
+	{
 		path: '/login',
 		name: 'login',
 		component: () => import('/@/views/system/login/index.vue'),

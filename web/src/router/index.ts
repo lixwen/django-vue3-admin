@@ -1,18 +1,18 @@
-import {createRouter, createWebHashHistory} from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import pinia from '/@/stores/index';
-import {storeToRefs} from 'pinia';
-import {useKeepALiveNames} from '/@/stores/keepAliveNames';
-import {useRoutesList} from '/@/stores/routesList';
-import {useThemeConfig} from '/@/stores/themeConfig';
-import {Session} from '/@/utils/storage';
-import {dynamicRoutes, notFoundAndNoPower, staticRoutes} from '/@/router/route';
-import {initFrontEndControlRoutes} from '/@/router/frontEnd';
-import {initBackEndControlRoutes, setRouters} from '/@/router/backEnd';
-import {useFrontendMenuStore} from "/@/stores/frontendMenu";
-import {useTagsViewRoutes} from "/@/stores/tagsViewRoutes";
-import {toRaw} from "vue";
+import { storeToRefs } from 'pinia';
+import { useKeepALiveNames } from '/@/stores/keepAliveNames';
+import { useRoutesList } from '/@/stores/routesList';
+import { useThemeConfig } from '/@/stores/themeConfig';
+import { Session } from '/@/utils/storage';
+import { dynamicRoutes, notFoundAndNoPower, staticRoutes } from '/@/router/route';
+import { initFrontEndControlRoutes } from '/@/router/frontEnd';
+import { initBackEndControlRoutes, setRouters } from '/@/router/backEnd';
+import { useFrontendMenuStore } from "/@/stores/frontendMenu";
+import { useTagsViewRoutes } from "/@/stores/tagsViewRoutes";
+import { toRaw } from "vue";
 
 /**
  * 1、前端控制路由时：isRequestRoutes 为 false，需要写 roles，需要走 setFilterRoute 方法。
@@ -25,8 +25,8 @@ import {toRaw} from "vue";
 
 // 读取 `/src/stores/themeConfig.ts` 是否开启后端控制路由配置
 const storesThemeConfig = useThemeConfig(pinia);
-const {themeConfig} = storeToRefs(storesThemeConfig);
-const {isRequestRoutes} = themeConfig.value;
+const { themeConfig } = storeToRefs(storesThemeConfig);
+const { isRequestRoutes } = themeConfig.value;
 
 /**
  * 创建一个可以被 Vue 应用程序使用的路由实例
@@ -72,7 +72,7 @@ export function formatTwoStageRoutes(arr: any) {
     const cacheList: Array<string> = [];
     arr.forEach((v: any) => {
         if (v.path === '/') {
-            newArr.push({component: v.component,name: v.name,path: v.path,redirect: v.redirect,meta: v.meta,children: []});
+            newArr.push({ component: v.component, name: v.name, path: v.path, redirect: v.redirect, meta: v.meta, children: [] });
         } else {
             // 判断是否是动态路由（xx/:id/:name），用于 tagsView 等中使用
             // 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
@@ -80,7 +80,7 @@ export function formatTwoStageRoutes(arr: any) {
                 v.meta['isDynamic'] = true;
                 v.meta['isDynamicPath'] = v.path;
             }
-            newArr[0].children.push({...v});
+            newArr[0].children.push({ ...v });
             // 存 name 值，keep-alive 中 include 使用，实现路由的缓存
             // 路径：/@/layout/routerView/parent.vue
             if (newArr[0].meta.isKeepAlive && v.meta.isKeepAlive && v.component_name != "") {
@@ -94,8 +94,8 @@ export function formatTwoStageRoutes(arr: any) {
 }
 
 // 路由加载前
-router.beforeEach(async (to, from, next) => {
-    NProgress.configure({showSpinner: false});
+router.beforeEach(async (to: { meta: { title: any; }; path: string; query: any; params: any; }, from: any, next: (arg0: string | undefined) => void) => {
+    NProgress.configure({ showSpinner: false });
     if (to.meta.title) NProgress.start();
     const token = Session.get('token');
     if (to.path === '/login' && !token) {
@@ -112,7 +112,7 @@ router.beforeEach(async (to, from, next) => {
         } else {
 
             const storesRoutesList = useRoutesList(pinia);
-            const {routesList} = storeToRefs(storesRoutesList);
+            const { routesList } = storeToRefs(storesRoutesList);
             if (routesList.value.length === 0) {
                 if (isRequestRoutes) {
                     // 后端控制路由：路由数据初始化，防止刷新时丢失
